@@ -1,5 +1,6 @@
 {
-  "name": "electron-cra-carbon",
+  "name": "elektra-carbon",
+  "homepage": "./",
   "author": "Jagath Jayakumar",
   "version": "0.1.0",
   "private": true,
@@ -14,21 +15,36 @@
     "sass": "^1.63.6",
     "web-vitals": "^2.1.4"
   },
-  "main": "public/electron.js",
+  "main": "./public/electron.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp public/electron.js build/electron.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
-    "electron": "wait-on tcp:3000 && electron .",
-    "app:dir": "electron-builder --dir",
-    "app:dist": "npm run build && electron-builder"
+    "electron:start": "concurrently -k \"cross-env BROWSER=none npm run start\" \"wait-on http://localhost:3000 && electronmon .\"",
+    "electron:package:mac": "npm run build && electron-builder -m -c.extraMetadata.main=build/electron.js",
+    "electron:package:win": "npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
+    "electron:package:linux": "npm run build && electron-builder -l -c.extraMetadata.main=build/electron.js"
   },
   "build": {
-    "appId": "your.id",
+    "appId": "com.electron.myapp",
+    "productName": "Elektra-Carbon",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "public"
+    },
     "mac": {
-      "category": "your.app.category.type"
+      "target": "dmg",
+      "icon": "build/logo.png"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "deb"
     }
   },
   "eslintConfig": {
@@ -39,11 +55,10 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 1 electron version"
     ],
     "development": [
+      "last 1 electron version",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
@@ -51,9 +66,10 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3",
     "electron": "^25.2.0",
     "electron-builder": "^24.4.0",
-    "electron-is-dev": "^2.0.0",
+    "electronmon": "^2.0.2",
     "wait-on": "^7.0.1"
   }
 }

@@ -1,53 +1,57 @@
 {
-    "productName": "Your App Name",
-    "directories": {
-      "output": "build",
-      "buildResources": "public"
+  "productName": "Your App Name",
+  "directories": {
+    "output": "build",
+    "buildResources": "public"
+  },
+  "files": [
+    "build/**/*",
+    "public/**/*",
+    "src/**/*",
+    "package.json",
+    {
+      "from": "public/electron.js",
+      "to": "build/electron.js"
     },
-    "files": [
-        "build/**/*",
-        "public/**/*",
-        "src/**/*",
-        "package.json",
-        "public/electron.js"
-    ],
-    "appId": "com.yourcompany.yourapp",
-    "mac": {
-      "category": "your.app.category",
-      "target": "dmg"
-    },
-    "dmg": {
-        "sign": false,
-        "contents": [
-          {
-            "x": 410,
-            "y": 150,
-            "type": "link",
-            "path": "/Applications"
-          },
-          {
-            "x": 130,
-            "y": 150,
-            "type": "file"
-          }
-        ]
-      },
-      "win": {
-        "target": "nsis"
-      },
-      "linux": {
-        "target": [
-          "AppImage",
-          "deb"
-        ]
-      },
-    "publish": [
+    {
+      "from": "node_modules",
+      "to": "node_modules"
+    }
+  ],
+  "appId": "com.yourcompany.yourapp",
+  "mac": {
+    "category": "your.app.category",
+    "target": "dmg"
+  },
+  "dmg": {
+    "sign": false,
+    "contents": [
       {
-        "provider": "github",
-        "owner": "your-github-username",
-        "repo": "your-github-repo",
-        "releaseType": "draft"
+        "x": 410,
+        "y": 150,
+        "type": "link",
+        "path": "/Applications"
+      },
+      {
+        "x": 130,
+        "y": 150,
+        "type": "file"
       }
-    ]
-  }
-  
+    ],
+    "icon": "public/logo.png"
+  },
+  "win": {
+    "target": "nsis"
+  },
+  "linux": {
+    "target": ["AppImage", "deb"]
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "your-github-username",
+      "repo": "your-github-repo",
+      "releaseType": "draft"
+    }
+  ]
+}
